@@ -20,6 +20,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'jenis_kelamin',
+        'tanggal_lahir',
+        'role',
+        'alamat',
+        'no_hp',
+        'avatar',
     ];
 
     /**
@@ -40,4 +46,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function wisata()
+    {
+        return $this->hasOne(Wisata::class);
+    }
 }
