@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function index(User $user)
     {
-        if(is_null($user->id) && auth()->user()->role != 'admin'){
+        if (is_null($user->id) && auth()->user()->role != 'admin') {
             $user = auth()->user();
         }
         return view('user.profile', compact('user'));
@@ -20,15 +20,15 @@ class UserController extends Controller
     public function all(Request $request, $role)
     {
         $l = false;
-        $users = User::where('role',$role);
-        if(!empty($request->all())){
-            $users = $users->where('name','like','%'.$request->search.'%');    
+        $users = User::where('role', $role);
+        if (!empty($request->all())) {
+            $users = $users->where('name', 'like', '%' . $request->search . '%');
             $users = $users->get();
-        }else{
-            $l=true;
+        } else {
+            $l = true;
             $users = $users->paginate(10);
         }
-        return view('user.all', compact(['users','role','l']));
+        return view('user.all', compact(['users', 'role', 'l']));
     }
     public function update(Request $request)
     {
@@ -43,13 +43,6 @@ class UserController extends Controller
             'no_hp' => ['required', 'min:10'],
             'tanggal_lahir' => ['required'],
         ]);
-        if ($user->role == 'pengelola_wisata') {
-        
-        $request->validate([
-            'nik' => ['required', 'min:14'],
-            'scan_ktp' => ['required', 'max:2048', 'image']
-        ]);
-        }
         if (!is_null($request->password)) {
             if (Hash::check($request->old_password, $user->password)) {
                 $user->update([
@@ -65,7 +58,6 @@ class UserController extends Controller
             $fileName = substr(md5(microtime()), 0, 100) . '.' . $file->getClientOriginalExtension();
             $request->file('image')->storeAs('public/avatar', $fileName);
         }
-        if ($user->role != 'pengelola_wisata') {
             $user->update([
                 'name' => $request->nama,
                 'email' => $request->email,
@@ -77,24 +69,7 @@ class UserController extends Controller
                 'no_hp' => $request->no_hp,
                 'tanggal_lahir' => $request->tanggal_lahir
             ]);
-        }else{
-            $user->update([
-                'name' => $request->nama,
-                'email' => $request->email,
-                'password' => !is_null($request->password) ? bcrypt($request->password) : $user->password,
-                'role'  =>  $user->role,
-                'alamat' => $request->alamat,
-                'avatar' => $fileName,
-                'jenis_kelamin' => $request->jenis_kelamin,
-                'no_hp' => $request->no_hp,
-                'tanggal_lahir' => $request->tanggal_lahir
-            ]);
-            $user->wisata()->update([
-                'nik' => $request->nik,
-                'scan_ktp' => $request->scan_ktp,
-            ]);
-        }
-        toast('Success Update!','success');
+        toast('Success Update!', 'success');
         return redirect()->back();
     }
 }

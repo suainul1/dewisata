@@ -4,7 +4,6 @@
 @endsection
 @section('content')
 <div class="page">
-    
     <div class="page-content container-fluid">
 <div class="row justify-content-center">
 <div class="col-md-6 col-sm-12">
@@ -29,7 +28,7 @@
     <div class="card-block">
       @if ($user->role == "pengelola_wisata")
             
-        <a href="javascript:void(0)" data-target="#ktp" id="myButton" data-toggle="modal" class="card-link">Lihat KTP</a>
+        <a href="javascript:void(0)" data-target="#ktp" data-toggle="modal" class="card-link">Lihat KTP</a>
          <!-- Modal ktp-->
          <div class="modal fade modal-fall" id="ktp" aria-hidden="true" aria-labelledby="exampleModalTitle"
          role="dialog" tabindex="-1">
@@ -86,16 +85,6 @@
         <span class="text-danger">{{$message}}</span>
         @enderror
               </div>
-              @if ($user->role == 'ahli_tani')
-            <span class="text-info">Nb:Profesi diisi khusus Ahli tani</span>
-            <div class="form-group form-material @error('profesi') has-danger @enderror" data-plugin="formMaterial">
-              <label class="form-control-label" for="inputText">Profesi</label>
-              <input type="text" class="form-control" id="inputText" value="{{$user->ahliTani->profesi}}" name="profesi" placeholder="Profesi">
-              @error('profesi')
-              <span class="text-danger">{{$message}}</span>
-              @enderror
-            </div>
-            @endif
               <span class="text-danger">Jika Tidak ingin mengganti password harap tidak diisi</span>
               <div class="form-group form-material @error('old_password') has-danger @enderror" data-plugin="formMaterial">
                 <label class="form-control-label" for="inputPassword">Password lama</label>
@@ -152,7 +141,7 @@
               <div class="form-group form-material form-material-file @error('image') has-danger @enderror" data-plugin="formMaterial">
                 <label class="form-control-label" for="inputFile">Foto Profile</label>
                 <input type="text" class="form-control" placeholder="Browse.." readonly="">
-                <input type="file" id="inputFile" name="image" multiple="" class="">
+                <input type="file" id="inputFile" name="image">
                 @error('image')
                 <span class="text-danger">{{$message}}</span>
               

@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\BankController;
+use App\Http\Controllers\HargaWisataController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WisataController;
+use App\Http\Controllers\XenditController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -24,18 +27,33 @@ Auth::routes();
 
 
 
-Route::group(['middleware' => ['auth', 'CheckRole:wisatawan,pengelola_wisata']], function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group(['middleware' => ['auth', 'CheckRole:admin,pengelola_wisata']], function () {
     Route::prefix('user')->name('user.')->group(function () {
-        Route::put('/update', [UserController::class, 'update'])->name('update');
         Route::get('/data/{role}', [UserController::class, 'all'])->name('all');
+        Route::put('/update', [UserController::class, 'update'])->name('update');
         Route::get('/{user?}', [UserController::class, 'index'])->name('index');
 
     });
     Route::prefix('wisata')->name('wisata.')->group(function () {
         Route::get('/all',[WisataController::class,'all'])->name('data');
-        Route::put('/konfirmasi/{act}',[WisataController::class,'konfirmasi'])->name('konfirmasi');
+        Route::get('detail/{wisata}',[WisataController::class,'detail'])->name('detail');
+        Route::put('/konfirmasi/{act?}',[WisataController::class,'konfirmasi'])->name('konfirmasi');
         Route::get('/pengajuan',[WisataController::class,'pengajuan'])->name('pengajuan');
-        Route::post('/pengajuan',[WisataController::class,'store']);
+        Route::put('/pengajuan',[WisataController::class,'ajukan']);
+        Route::get('/kelola',[WisataController::class,'kelola'])->name('kelola');
+        Route::put('/kelola/{wisata}',[WisataController::class,'update'])->name('update');
+        Route::delete('/foto/{gallery}',[WisataController::class,'destroyFoto'])->name('destroy-foto');
+        
     });
+    Route::prefix('harga-wisata')->name('harga.')->group(function () {
+        Route::post('/create/{wisata}',[HargaWisataController::class,'create'])->name('create');
+        Route::delete('/delete/{tiket}',[HargaWisataController::class,'destroy'])->name('destroy');
+    });
+    Route::prefix('bank')->name('bank.')->group(function () {
+        Route::post('/create',[BankController::class,'create'])->name('create');
+        Route::put('/update/{bank}',[BankController::class,'update'])->name('update');
+        Route::post('/pencairan',[BankController::class,'pencairan'])->name('pencairan');
+    });
+    Route::get('/pay',[XenditController::class,'getBank']);
 });

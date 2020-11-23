@@ -50,4 +50,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(Wisata::class);
     }
+    public function bank()
+    {
+        return $this->hasOne(Bank::class);
+    }
+    public function pencairan()
+    {
+        return $this->hasMany(PencairanDana::class);
+    }
 }
