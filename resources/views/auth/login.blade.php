@@ -50,7 +50,7 @@
                             @endif
 
         <footer class="page-copyright page-copyright-inverse">
-          <p>Kelompok G PPL C</p>
+          <p>Kelompok TRPL</p>
           <p>© 2020. All RIGHT RESERVED.</p>
           <div class="social">
             <a class="btn btn-icon btn-pure" href="javascript:void(0)">
