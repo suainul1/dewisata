@@ -18,6 +18,12 @@
                           <span class="site-menu-title">Kelola Wisata</span>
                       </a>
                   </li>
+                  <li class="site-menu-item active">
+                    <a class="animsition-link" href="{{route('transaksi.riwayat')}}">
+                        <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
+                        <span class="site-menu-title">Riwayat Transaksi</span>
+                    </a>
+                </li>
                     @endif
                     @if (auth()->user()->role == 'admin')
                     <li class="site-menu-item active">
@@ -26,12 +32,11 @@
                           <span class="site-menu-title">Data Pengajuan</span>
                       </a>
                   </li>
-                    @endif
-                    <li class="site-menu-item has-sub">
-                        <a href="javascript:void(0)">
-                            <i class="site-menu-icon md-google-pages" aria-hidden="true"></i>
-                            <span class="site-menu-title">Managemen Pengguna</span>
-                            <span class="site-menu-arrow"></span>
+                  <li class="site-menu-item has-sub">
+                      <a href="javascript:void(0)">
+                          <i class="site-menu-icon md-google-pages" aria-hidden="true"></i>
+                          <span class="site-menu-title">Managemen Pengguna</span>
+                          <span class="site-menu-arrow"></span>
                         </a>
                         <ul class="site-menu-sub">
                             <li class="site-menu-item">
@@ -44,11 +49,10 @@
                                     <span class="site-menu-title">Pengelola Wisata</span>
                                 </a>
                             </li>
-
+                            
                         </ul>
                     </li>
-
-
+                    @endif
                 </ul>
                 <div class="site-menubar-section">
                     <h5>

@@ -25,4 +25,8 @@ class Wisata extends Model
     {
         return $this->hasMany(Tiket::class);
     }
+    public function transaksi()
+    {
+        return $this->hasMany(Transaksi::class);
+    }
 }
