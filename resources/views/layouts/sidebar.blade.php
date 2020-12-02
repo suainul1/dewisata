@@ -18,12 +18,6 @@
                           <span class="site-menu-title">Kelola Wisata</span>
                       </a>
                   </li>
-                  <li class="site-menu-item active">
-                    <a class="animsition-link" href="{{route('transaksi.riwayat')}}">
-                        <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
-                        <span class="site-menu-title">Riwayat Transaksi</span>
-                    </a>
-                </li>
                     @endif
                     @if (auth()->user()->role == 'admin')
                     <li class="site-menu-item active">
@@ -53,6 +47,20 @@
                         </ul>
                     </li>
                     @endif
+                    @if (auth()->user()->role == 'wisatawan')
+                    <li class="site-menu-item active">
+                      <a class="animsition-link" href="{{route('etalase.index')}}">
+                          <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
+                          <span class="site-menu-title">Tempat Wisata</span>
+                      </a>
+                    </li>
+                  @endif
+                  <li class="site-menu-item active">
+                    <a class="animsition-link" href="{{route('transaksi.riwayat')}}">
+                        <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
+                        <span class="site-menu-title">Riwayat Transaksi</span>
+                    </a>
+                </li>
                 </ul>
                 <div class="site-menubar-section">
                     <h5>

@@ -12,7 +12,10 @@ class UserController extends Controller
 {
     public function index(User $user)
     {
-        if (is_null($user->id) && auth()->user()->role != 'admin') {
+        if (is_null($user->id)) {
+            $user = auth()->user();
+        }
+        if(!is_null($user->id) && auth()->user()->role != 'admin'){
             $user = auth()->user();
         }
         return view('user.profile', compact('user'));

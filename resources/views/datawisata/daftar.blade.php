@@ -11,11 +11,11 @@
                 <div class="panel-heading">
                     <div class="text-center">
                         <button
-                            class="btn btn-{{$wisata->status == 'proses' ? 'warning' :($wisata->status == 'pengajuan' ? 'info' : 'danger')}} rounded-circle"><i
+                            class="btn btn-{{$wisata->status == 'proses' ? 'warning' :($wisata->status == 'pengajuan' ? 'info' : ($wisata->status == 'terima' ? 'success' : 'danger'))}} rounded-circle"><i
                                 class="icon md-refresh-alt" aria-hidden="true"></i></button>
                         <h3
-                            class="text-{{$wisata->status == 'proses' ? 'warning' :($wisata->status == 'pengajuan' ? 'primary' : 'danger')}} panel-title">
-                            {{$wisata->status == 'proses' ? 'Pengisian Form' :($wisata->status == 'pengajuan' ? 'Menunggu Proses Pengajuan' : 'Pengulangan Pengisian Form')}}
+                            class="text-{{$wisata->status == 'proses' ? 'warning' :($wisata->status == 'pengajuan' ? 'primary' : ($wisata->status == 'terima' ? 'success' : 'danger'))}} panel-title">
+                            {{$wisata->status == 'proses' ? 'Pengisian Form' :($wisata->status == 'pengajuan' ? 'Menunggu Proses Pengajuan' :($wisata->status == 'terima' ? 'Telah di setujui' : 'Pengulangan Pengisian Form') )}}
                             Wisata</h3>
                             @if ($wisata->status == 'tolak')
                             <div class="modal fade modal-fall" id="pesan" aria-hidden="true"
@@ -55,7 +55,7 @@
                         </div>
                         <label data-target="#imgmod" data-toggle="modal" class="text-warning" style="cursor: pointer"
                             for="">Lihat gallery foto/priview foto</label>
-                        @if ($wisata->status != 'pengajuan')
+                        @if ($wisata->status != 'pengajuan' && $wisata->status != 'terima')
                         <div class="form-group form-material form-material-file" data-plugin="formMaterial">
                             <label class="form-control-label" for="image">Gambar wisata(bisa lebi dari satu
                                 gambar)</label>
@@ -63,7 +63,7 @@
                             <input type="file" id="image" name="image[]" multiple="">
                         </div>
                         @endif
-                        @if ($wisata->status != 'pengajuan')
+                        @if ($wisata->status != 'pengajuan' && $wisata->status != 'terima')
                         <div class="modal fade modal-fall" id="modform" aria-hidden="true"
                             aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
                             <div class="modal-dialog modal-simple">
@@ -146,7 +146,7 @@
                             </select>
                         </div>
                         @if (auth()->user()->role == 'pengelola_wisata')
-                        <button type="{{$wisata->status == 'pengajuan' ? 'button' : 'submit'}}"
+                        <button type="{{$wisata->status == 'pengajuan' || $wisata->status == 'terima' ? 'button' : 'submit'}}"
                             class="btn btn-block btn-primary waves-effect waves-classic">Submit</button>
                             @endif
                         </form>      

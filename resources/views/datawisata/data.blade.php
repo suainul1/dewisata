@@ -34,6 +34,7 @@
             </thead>
             <tbody>
               @foreach ($wisata as $i=>$w)
+              @if ($w->status != 'proses')
               <tr>
               <th scope="row">{{$i+1}}</th>
               <td>{{$w->user->name}}</td>
@@ -85,6 +86,7 @@
        <!-- End Modal -->
                 </td>
               </tr>
+              @endif
               @endforeach
       
             </tbody>

@@ -17,11 +17,11 @@ class CreateTransaksisTable extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('wisata_id')->references('id')->on('wisatas')->onDelete('cascade');
+            $table->string('kode',10);
             $table->string('nama_wisata');
             $table->integer('jumlah_orang');
-            $table->integer('harga');
-            $table->string('invoice')->nullable();
-            $table->date('batas_pembayaran');
+            $table->string('invoice_id')->nullable();
+            $table->dateTime('batas_pembayaran');
             $table->enum('status',['proses','terbayar','berkunjung','batal'])->default('proses');
             $table->timestamps();
         });
