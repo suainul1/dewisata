@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BankController;
+use App\Http\Controllers\EtalaseController;
 use App\Http\Controllers\HargaWisataController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
@@ -34,7 +35,9 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,pengelola_wisata,wisataw
         Route::get('/{user?}', [UserController::class, 'index'])->name('index');
     });
     Route::prefix('transaksi')->name('transaksi.')->group(function () {
-        Route::get('/riwayat',[TransaksiController::class,'riwayat'])->name('riwayat');
+        Route::get('/riwayat', [TransaksiController::class, 'riwayat'])->name('riwayat');
+        Route::get('/search', [TransaksiController::class, 'search'])->name('search');
+        Route::put('/berkunjung/{transaksi}',[TransaksiController::class,'berkunjung'])->name('berkunjung');
     });
     Route::group(['middleware' => ['auth', 'CheckRole:admin,pengelola_wisata']], function () {
         Route::prefix('wisata')->name('wisata.')->group(function () {
@@ -59,4 +62,15 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,pengelola_wisata,wisataw
             Route::delete('/delete/{tiket}', [HargaWisataController::class, 'destroy'])->name('destroy');
         });
     });
+    Route::group(['middleware' => ['auth', 'CheckRole:wisatawan']], function () {
+        Route::prefix('etalase')->name('etalase.')->group(function () {
+            Route::get('/', [EtalaseController::class, 'index'])->name('index');
+            Route::get('/show/{w}', [EtalaseController::class, 'show'])->name('show');
+            Route::get('/pilih-harga/{w}', [EtalaseController::class, 'setPrice'])->name('setPrice');
+            Route::post('/checkout/{w}', [EtalaseController::class, 'checkout'])->name('checkout');
+        });
+      
+
+    });
 });
+Route::get('/xen',[XenditController::class,'payout']);

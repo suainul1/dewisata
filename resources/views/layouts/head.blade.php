@@ -7,7 +7,7 @@
     <meta name="description" content="Dr. Hama">
     <meta name="author" content="">
     
-    <title>{{$title ?? 'Login/Register'}}</title>
+    <title>{{$title ?? 'Halo:)'}}</title>
 
     
     <link rel="apple-touch-icon" href="{{asset('assets/images/apple-touch-icon.png')}}">

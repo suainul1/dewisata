@@ -1,4 +1,4 @@
-@extends('layouts.master',['body' => 'page-faq'])
+@extends('layouts.master',['title'=>'Kelola Wisata','body' => 'page-faq'])
 @section('head')
 <link rel="stylesheet" href="{{asset('global/vendor/summernote/summernote.css')}}">
 <script>
@@ -147,7 +147,7 @@
                                                                     </span>
                                                                     <input type="text" value="{{$i->nama}}"
                                                                         name="nama[]"
-                                                                        {{$i->nama == 'harga masuk' ? 'readonly' : null}}
+                                                                        {!!$i->nama == 'harga_masuk' ? 'readonly' : null !!}
                                                                         class="form-control" placeholder="nama tiket">
 
                                                                 </div>
@@ -156,7 +156,7 @@
                                                         <div class="col-md-6 col-sm-6">
                                                             <div class="form-group">
                                                                 <div class="input-group">
-                                                                    <span class="input-group-addon">$</span>
+                                                                    <span class="input-group-addon">Rp</span>
                                                                     <input type="text" value="{{$i->harga}}"
                                                                         name="harga[]" class="form-control"
                                                                         placeholder="wajib di isi">
@@ -182,7 +182,7 @@
                                                         <div class="col-md-6 col-sm-6">
                                                             <div class="form-group">
                                                                 <div class="input-group">
-                                                                    <span class="input-group-addon">$</span>
+                                                                    <span class="input-group-addon">Rp</span>
                                                                     <input type="text" name="harga[]"
                                                                         class="form-control" placeholder="wajib di isi">
                                                                 </div>
@@ -421,7 +421,7 @@
             <div class="col-md-6 col-sm-6 ${c}">
                 <div class="form-group">
                     <div class="input-group">
-                        <span class="input-group-addon">$</span>
+                        <span class="input-group-addon">Rp</span>
                         <input type="text" name="harga[]"
                             class="form-control" placeholder="harga tiket">
                     </div>
