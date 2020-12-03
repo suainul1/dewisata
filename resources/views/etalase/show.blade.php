@@ -26,6 +26,9 @@
                   <p class="card-text">
                     <small>{{$w->created_at->format('d-M-Y')}}</small>
                     <small>Lokasi: {{$w->alamat_wisata}}</small>
+                    @if (auth()->user()->role == 'admin')
+                    <small>Nama Pemilik: {{$w->user->name}}</small>
+                    @endif
                   </p>
                   {!! $w->deskripsi_wisata !!}
                 </div>
@@ -33,9 +36,43 @@
                   <h4>Jam Operasional:</h4>
                 <p>{{$w->jam_operasional}}</p>
                   </div>
+                  @if (auth()->user()->role == 'admin')
+                      
+                  
+                  <div class="card-block p-0">
+                    <h4>Harga Tiket:</h4>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Jenis Tiket</th>
+                          <th scope="col">Harga</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          @foreach ($w->tiket as $ii=>$h)
+                          <tr>
+                              <th scope="row">{{$ii+1}}</th>
+                              <td>{{$h->nama}}</td>
+                              <td>{{$h->harga}}</td>
+                              </tr>
+                              @endforeach
+                              <tr>
+                                <td><b>PPN:5%</b></td>
+                              </tr>
+                              <tr>
+                                <td><b>Kapasitas Harian: {{$w->kapasitas}}</b></td>
+                              </tr>
+                                
+                      </tbody>
+                    </table>
+                    </div>
+                    @endif
+                    @if (auth()->user()->role != 'admin')
                   <div class="card-block p-0 text-center">
                   <a href="{{route('etalase.setPrice',$w->slug)}}"><button class="btn btn-primary">Checkout</button></a>
                     </div>
+                    @endif
                 <div class="card-block px-0 clearfix">
                   
                   <div class="card-actions float-right">

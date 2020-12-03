@@ -19,9 +19,10 @@ class CreateTransaksisTable extends Migration
             $table->foreignId('wisata_id')->references('id')->on('wisatas')->onDelete('cascade');
             $table->string('kode',10);
             $table->string('nama_wisata');
-            $table->integer('jumlah_orang');
+            $table->integer('harga_total');
             $table->string('invoice_id')->nullable();
             $table->dateTime('batas_pembayaran');
+            $table->date('tanggal_berkunjung');
             $table->enum('status',['proses','terbayar','berkunjung','batal'])->default('proses');
             $table->timestamps();
         });

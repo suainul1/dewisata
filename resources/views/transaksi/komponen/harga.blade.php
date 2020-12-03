@@ -7,15 +7,19 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
-        <h4 class="modal-title">Detail harga</h4>
+      <h4 class="modal-title">Detail {{auth()->user()->role != 'admin' ? 'harga':null}}</h4>
       </div>
       <div class="modal-body">
+        @if (auth()->user()->role == 'admin')
+            @include('transaksi.komponen.rincian')
+        @endif
         <table class="table">
             <thead>
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Jenis Tiket</th>
                 <th scope="col">Harga</th>
+                <th scope="col">Jumlah</th>
               </tr>
             </thead>
             <tbody>
@@ -24,8 +28,15 @@
                     <th scope="row">{{$ii+1}}</th>
                     <td>{{$h->nama}}</td>
                     <td>{{$h->harga}}</td>
+                <td>{{$h->jumlah}}</td>
                     </tr>
                     @endforeach
+                    @if (auth()->user()->role == "pengelola_wisata")
+                    <tr>
+                      <td><b>PPN:5%</b></td>
+                    </tr>
+                        
+                    @endif
             </tbody>
           </table>
     </div>
