@@ -56,6 +56,7 @@ class WisataController extends Controller
             'jenis_wisata' => $request->jenis_wisata ?? $wisata->jenis_wisata,
             'jam_operasional' => $request->jam_wisata ?? $wisata->jam_operasional,
             'deskripsi_wisata' => $request->deskripsi_wisata ?? $wisata->deskripsi_wisata,
+            'kapasitas' => $request->kapasitas ?? $wisata->kapasitas,
         ]);
         return redirect()->back();
     }

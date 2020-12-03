@@ -34,6 +34,12 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,pengelola_wisata,wisataw
         Route::put('/update', [UserController::class, 'update'])->name('update');
         Route::get('/{user?}', [UserController::class, 'index'])->name('index');
     });
+    Route::prefix('etalase')->name('etalase.')->group(function () {
+        Route::get('/', [EtalaseController::class, 'index'])->name('index');
+        Route::get('/show/{w}', [EtalaseController::class, 'show'])->name('show');
+        Route::get('/pilih-harga/{w}', [EtalaseController::class, 'setPrice'])->name('setPrice');
+        Route::post('/checkout/{w}', [EtalaseController::class, 'checkout'])->name('checkout');
+    });
     Route::prefix('transaksi')->name('transaksi.')->group(function () {
         Route::get('/riwayat', [TransaksiController::class, 'riwayat'])->name('riwayat');
         Route::get('/search', [TransaksiController::class, 'search'])->name('search');
@@ -63,12 +69,7 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,pengelola_wisata,wisataw
         });
     });
     Route::group(['middleware' => ['auth', 'CheckRole:wisatawan']], function () {
-        Route::prefix('etalase')->name('etalase.')->group(function () {
-            Route::get('/', [EtalaseController::class, 'index'])->name('index');
-            Route::get('/show/{w}', [EtalaseController::class, 'show'])->name('show');
-            Route::get('/pilih-harga/{w}', [EtalaseController::class, 'setPrice'])->name('setPrice');
-            Route::post('/checkout/{w}', [EtalaseController::class, 'checkout'])->name('checkout');
-        });
+        
       
 
     });

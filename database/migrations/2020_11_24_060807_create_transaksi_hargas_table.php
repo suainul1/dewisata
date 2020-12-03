@@ -18,6 +18,7 @@ class CreateTransaksiHargasTable extends Migration
             $table->foreignId('transaksi_id')->references('id')->on('transaksis')->onDelete('cascade');
            $table->string('nama');
             $table->integer('harga');
+            $table->integer('jumlah')->default(1);
             $table->timestamps();
         });
     }

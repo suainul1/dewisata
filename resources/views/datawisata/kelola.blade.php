@@ -75,6 +75,12 @@
                                                     @csrf
                                                     @method('put')
                                                     <div class="form-group form-material" data-plugin="formMaterial">
+                                                        <label class="form-control-label" for="kapasitas">Kuota Harian</label>
+                                                        <input type="number" class="form-control"
+                                                            value="{{$wisata->kapasitas}}"
+                                                            id="kapasitas" name="kapasitas" placeholder="Kapasitas Harian">
+                                                    </div>
+                                                    <div class="form-group form-material" data-plugin="formMaterial">
                                                         <label class="form-control-label" for="jam">Jam
                                                             Operasional</label>
                                                         <textarea class="form-control" id="jam" name="jam_wisata"
@@ -213,6 +219,39 @@
                             <div class="tab-pane animation-fade" id="category-3" role="tabpanel">
                                 <div class="panel-group panel-group-simple panel-group-continuous" id="accordion1"
                                     aria-multiselectable="true" role="tablist">
+                                    <div class="panel">
+                                        <div class="panel-heading" id="question-100" role="tab">
+                                            <a class="panel-title" aria-controls="answer-100" aria-expanded="true"
+                                                data-toggle="collapse" href="#answer-100" data-parent="#accordion1">
+                                                <b>Jumlah Saldo</b>
+                                            </a>
+                                        </div>
+                                        <div class="panel-collapse collapse" id="answer-100" aria-labelledby="question-8"
+                                            role="tabpanel">
+                                            <div class="panel-body">
+                                                @php
+                                                $hitung = App\Models\Transaksi::where('status','terbayar')->where('wisata_id',auth()->user()->wisata->id)->get('harga_total');
+                                                $saldo = 0;
+                                                foreach ($hitung as $hit) {
+                                                    $saldo += ($hit->harga_total-(5/100*$hit->harga_total));
+                                                }
+                                                @endphp
+                                                    <div class="form-group form-material" data-plugin="formMaterial">
+                                                        <label class="form-control-label" for="inputText">Jumlah Saldo</label>
+                                                        <input type="text" class="form-control"
+                                                    value="{{$saldo}}"
+                                                            id="inputText" name="nama" placeholder="Jumlah Saldo" readonly>
+                                                    </div>
+                                                   
+                                                    
+                                                    <button type="submit"
+                                                        class="btn btn-block btn-primary waves-effect waves-classic">Save</button>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Question 8 -->
                                     <!-- Question 8 -->
                                     <div class="panel">
                                         <div class="panel-heading" id="question-8" role="tab">

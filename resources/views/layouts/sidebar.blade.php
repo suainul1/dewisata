@@ -21,6 +21,12 @@
                     @endif
                     @if (auth()->user()->role == 'admin')
                     <li class="site-menu-item active">
+                        <a class="animsition-link" href="{{route('etalase.index')}}">
+                            <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
+                            <span class="site-menu-title">Data Tiket Wisata</span>
+                        </a>
+                      </li>
+                    <li class="site-menu-item active">
                       <a class="animsition-link" href="{{route('wisata.data')}}">
                           <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
                           <span class="site-menu-title">Data Pengajuan</span>

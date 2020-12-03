@@ -16,6 +16,7 @@
                     <th scope="col">No</th>
                     <th scope="col">Nama Varian Harga</th>
                     <th scope="col">Harga</th>
+                    <th scope="col">Jumlah</th>
                     <th scope="col">Pilih</th>
                   </tr>
                 </thead>
@@ -26,15 +27,21 @@
                     <th scope="row">{{$i+1}}</th>
                     <td>{{$t->nama}}</td>
                     <td>{{$t->harga}}</td>
-                    <td><input required type="checkbox" id="inputUnchecked" value="{{$t->id}}" name="harga[]"></td>
+                    <td><input type="number" value="1" name="orang[]" class="form-control" id="inputText" placeholder="Jumlah Orang"></td>
+                    <td><input type="checkbox" id="inputUnchecked" value="{{$t->id}}" name="harga[]"></td>
                     </tr>
                     @endforeach
                 </tbody>
               </table>
               <div class="form-group form-material" data-plugin="formMaterial">
-                <label class="form-control-label" for="inputText">Jumlah Orang</label>
-                <input required type="number" value="1" name="orang" class="form-control" id="inputText" placeholder="Jumlah Orang">
-              </div>
+                <label class="form-control-label" for="berkunjung">Tanggal Berkunjung</label>
+                <input type="date" class="form-control"
+                    id="berkunjung" name="berkunjung" placeholder="Atur Tanggal Berkunjung"
+                    >
+                    @if(session()->get('error'))
+                    <span class="text-danger">{!! session()->get('error') !!} </span>
+                    @endif  
+                  </div>
             <button type="submit" class="btn btn-primary btn-block btn-round waves-effect waves-classic">Kirim</button>
                         
           </form>

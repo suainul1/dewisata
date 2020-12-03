@@ -25,13 +25,16 @@
               <tr>
                 <th scope="col">No</th>
                 <th scope="col">Nama Wisata</th>
-                <th scope="col">Jumlah Orang</th>
-                <th scope="col">Detail Harga</th>
+              <th scope="col">Detail {{auth()->user()->role != 'admin' ? 'Harga' : null}}</th>
                 <th scope="col">Kode Transaksi</th>
                 <th scope="col">total Harga</th>
                 <th scope="col">Tanggal Beli</th>
                 <th scope="col">Tanggal Berkunjung</th>
                 <th scope="col">Link Invoice</th>
+                @if (auth()->user()->role == 'admin')
+                <th scope="col">Ppn</th>
+                <th scope="col">Nama Pengelola</th>
+                @endif
                 <th scope="col">status</th>
                 @if (auth()->user()->role == 'pengelola_wisata')
                 <th scope="col">Action</th>
@@ -48,7 +51,7 @@
                     'status' => 'terbayar',
                   ]);
                 }   
-                if($t->batas_pembayaran <=  \Carbon\Carbon::now()->toDateString() && $t->status == 'proses'){
+                if(($t->batas_pembayaran <=  \Carbon\Carbon::now()->toDateString() || $t->tanggal_berkunjung < \Carbon\Carbon::now()->toDateString()) && $t->status == 'proses'){
                   $y->expinvoice($t->invoice_id);
                   $t->update([
                     'status' => 'batal',
@@ -60,14 +63,17 @@
               <tr>
                 <th scope="row">{{$i+1}}</th>
                 <td>{{$t->wisata->nama_wisata}}</td>
-                <td>{{$t->jumlah_orang}}</td>
                 <td><button type="button" data-target="#harga{{$t->id}}" data-toggle="modal" 
                   class="btn btn-block btn-primary waves-effect waves-classic">Lihat</button></td>
                 <td>{{$t->kode}}</td>
-                  <td>{{$t->harga->sum('harga') * $t->jumlah_orang}}</td>
+                  <td>{{auth()->user()->role == "pengelola_wisata" ? $t->harga_total-(5/100*$t->harga_total) : $t->harga_total}}</td>
               <td>{{$t->created_at->format('d-M-Y')}}</td>
-              <td>{{$t->status == 'berkunjung' ? $t->updated_at->format('d-M-Y') : 'belum berkunjung'}}</td>
+              <td>{{$t->tanggal_berkunjung}}</td>
               <td><a href="{{$x['invoice_url']}}" target="__blank">See Invoice</a></td>  
+              @if (auth()->user()->role == 'admin')
+              <td>5%</td>
+                <td>{{$t->wisata->user->name}}</td>
+              @endif
               <td><span class="badge badge-outline badge-{{($t->status == 'proses') ? 'warning' : (($t->status == 'batal') ? 'danger' :'success')}}">{{Str::title($t->status)}}</span></td>
               @if ((auth()->user()->role == 'pengelola_wisata') && ($t->status == 'terbayar'))
               <td>

@@ -59,6 +59,30 @@
     
           <!-- Navbar Toolbar Right -->
           <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
+            @if (auth()->user()->role != 'wisatawan')
+            <li class="nav-item dropdown">
+                  
+              @php
+              $hitung = App\Models\Transaksi::where('status','terbayar');
+              if(auth()->user()->role != 'admin'){
+                $hitung = $hitung->where('wisata_id',auth()->user()->wisata->id)->get('harga_total');
+              }else{
+                $hitung = $hitung->get('harga_total');
+                
+              }
+              $saldo = 0;
+              foreach ($hitung as $hit) {
+                if(auth()->user()->role == 'admin'){
+                  $saldo += (5/100*$hit->harga_total);
+                }else{
+                  $saldo += ($hit->harga_total-(5/100*$hit->harga_total));
+                                                
+                }
+              }
+              @endphp
+            <span class="nav-link text-success">Total Saldo: Rp. {{$saldo}}</span>
+          </li>
+          @endif
             <li class="nav-item dropdown">
               <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" data-animation="scale-up"
                 aria-expanded="false" role="button">
