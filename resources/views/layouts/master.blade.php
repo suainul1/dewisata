@@ -63,7 +63,7 @@
             <li class="nav-item dropdown">
                   
               @php
-              $hitung = App\Models\Transaksi::where('status','terbayar');
+              $hitung = App\Models\Transaksi::where('status','terbayar')->orWhere('status','berkunjung');
               if(auth()->user()->role != 'admin'){
                 $hitung = $hitung->where('wisata_id',auth()->user()->wisata->id)->get('harga_total');
               }else{
