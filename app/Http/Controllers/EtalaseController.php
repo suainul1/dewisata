@@ -38,6 +38,8 @@ class EtalaseController extends Controller
         })->where('nama','harga_masuk')->sum('jumlah');
         if($hitung+$request->orang[0] >= $w->kapasitas){
             return redirect()->back()->with('error', 'Kuota Pada hari tersebut telah tercukupi');
+        }elseif($request->berkunjung < Carbon::now()){
+             return redirect()->back()->with('error', 'tanggal telah terlewat');
         }
         DB::transaction(function() use($request,$w){
             $trans = Transaksi::create([

@@ -3,8 +3,8 @@
 <link rel="stylesheet" href="{{asset('assets/examples/css/uikit/dropdowns.css')}}">
 <link rel="stylesheet" href="{{asset('global/vendor/summernote/summernote.css')}}">
 <script>
-  function act(){
-    var i =document.getElementById("formT");
+  function act(id){
+    var i =document.getElementById(id);
     i.action = "{{route('wisata.konfirmasi','terima')}}";
     
     i.submit();
@@ -45,17 +45,17 @@
                      <div class="dropdown" style="display: inline">
                      <button type="button" class="btn btn-{{($w->status == 'proses') ? 'warning' : (($w->status == 'tolak') ? 'danger' :'success')}} dropdown-toggle waves-effect waves-classic" id="exampleColorDropdown3" data-toggle="dropdown" aria-expanded="false"><i class="icon md-brush" aria-hidden="true"></i>{{$w->status == 'proses' ? 'Proses Pengisian' : ($w->status == 'tolak' ? 'di Tolak' :($w->status == 'terima' ? 'di Terima' :'Pengajuan'))}}</button>
                       <div class="dropdown-menu dropdown-menu-success" aria-labelledby="exampleColorDropdown3" role="menu">
-                      <form id="formT" action="" method="post">
+                      <form id="formT{{$w->id}}" action="" method="post">
                         @csrf
                         @method('put')
                       <input type="number" name="id" hidden value="{{$w->id}}">
                       </form>
-                        <a class="dropdown-item" onclick="act()" href="javascript:void(0)" role="menuitem">Terima</a>
-                        <a class="dropdown-item" data-target="#prompt" data-toggle="modal" href="javascript:void(0)" role="menuitem">Tolak</a>
+                        <a class="dropdown-item" onclick="act('formT{{$w->id}}')" href="javascript:void(0)" role="menuitem">Terima</a>
+                        <a class="dropdown-item" data-target="#prom{{$w->id}}" data-toggle="modal" href="javascript:void(0)" role="menuitem">Tolak</a>
                        </div>
                     </div>
                      <!-- Modal ktp-->
-         <div class="modal fade modal-fall" id="prompt" aria-hidden="true" aria-labelledby="exampleModalTitle"
+         <div class="modal fade modal-fall" id="prom{{$w->id}}" aria-hidden="true" aria-labelledby="exampleModalTitle"
          role="dialog" tabindex="-1">
          <div class="modal-dialog modal-simple">
            <div class="modal-content">
