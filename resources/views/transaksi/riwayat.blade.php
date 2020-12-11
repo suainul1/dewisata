@@ -46,6 +46,7 @@
               @php
                 $y = new \App\Http\Controllers\XenditController;
                 $x = $y->invoice($t->invoice_id);
+             
                 if($x['status'] == 'SETTLED' && $t->status == 'proses'){
                   $t->update([
                     'status' => 'terbayar',

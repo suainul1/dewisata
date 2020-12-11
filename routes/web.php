@@ -3,6 +3,7 @@
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\EtalaseController;
 use App\Http\Controllers\HargaWisataController;
+use App\Http\Controllers\KomentarController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WisataController;
@@ -29,6 +30,15 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 
 Route::group(['middleware' => ['auth', 'CheckRole:admin,pengelola_wisata,wisatawan']], function () {
+    Route::prefix('komentar')->name('komentar.')->group(function () {
+        Route::get('/wisata',[KomentarController::class,'index'])->name('index');
+        Route::get('/wisata/{w}',[KomentarController::class,'show'])->name('show');
+        Route::post('/komen/{id}',[KomentarController::class,'create'])->name('create');
+        Route::put('/komen/edit/{id}',[KomentarController::class,'editKomen'])->name('editKomen');
+        Route::post('/komen/balas/{k}',[KomentarController::class,'balas'])->name('balas');
+        Route::put('/komen/balas/edit/{id}',[KomentarController::class,'editBalas'])->name('editBalas');
+        
+    });
     Route::prefix('user')->name('user.')->group(function () {
         Route::get('/data/{role}', [UserController::class, 'all'])->name('all');
         Route::put('/update', [UserController::class, 'update'])->name('update');
