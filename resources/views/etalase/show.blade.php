@@ -1,6 +1,17 @@
 @extends('layouts.master',['title'=> $w->nama_wisata])
 @section('head')
 <link rel="stylesheet" href="{{asset('assets/examples/css/pages/email.css')}}">
+<script>
+
+  function balas(id){
+    if(document.getElementById(`komen-${id}`).style.display == 'none'){
+        document.getElementById(`komen-${id}`).style.display = "inline";
+    }else{
+      document.getElementById(`komen-${id}`).style.display = "none";
+
+    }
+        }
+</script>
 @endsection
 @section('content')
 
@@ -68,7 +79,10 @@
                     </table>
                     </div>
                     @endif
-                    @if (auth()->user()->role != 'admin')
+                    @php
+                        $cm = $cm ?? null;
+                    @endphp
+                    @if (auth()->user()->role != 'admin' && is_null($cm))
                   <div class="card-block p-0 text-center">
                   <a href="{{route('etalase.setPrice',$w->slug)}}"><button class="btn btn-primary">Checkout</button></a>
                     </div>
@@ -89,42 +103,106 @@
                 </a>
                   </div>
                 </div>
-                <div class="card-block px-0">
-                  <h3 class="card-heading">
-                    Comments
-                  </h3>
-                  <div class="card-block p-0">
-                    <div class="media">
-                      <div class="pr-20">
-                        <a class="avatar" href="#">
-                          <img class="img-responsive" src="../../../global/portraits/1.jpg" alt="..." />
-                        </a>
-                      </div>
-                      <div class="media-body">
-                        <div class="mt-0 mb-5" href="#">
-                          Herman Beck
-                          <small>Yesterday at 12:30AM</small>
-                        </div>
-                        <small>Officia qui commodo ad dolor. Sit nisi minim aute deserunt
-                          quis. Cupidatat ea officia in proident non. Mollit
-                          id sit aliqua laborum. Officia labore dolor irure amet.
-                          Excepteur eu sit ullamco duis sunt anim consectetur.
-                          Id aute non amet culpa pariatur officia.</small>
-                      </div>
+             <hr>
+         
+                  <!-- Panel Comments Full -->
+                @if (!is_null($cm))
+                <div class="comments mx-20">
+                  <h3>Forum</h3>
+                  @foreach ($komentar as $k)
+                      
+                  <div class="comment media">
+                    <div class="pr-20">
+                      <a class="avatar avatar-lg" href="javascript:void(0)">
+                        <img src="{{asset(Storage::url(is_null($k->user->avatar) ? '1.jpg' : 'avatar/'.$k->user->avatar))}}" alt="...">
+                      </a>
                     </div>
+                    <div class="media-body">
+                      <div class="comment-body">
+                      <a class="comment-author" href="javascript:void(0)">{{$k->user->name}}</a>
+                        <div class="comment-meta">
+                        <span class="date">{{$k->created_at->diffForHumans()}} at {{$k->created_at->format('H:i')}}</span>
+                        </div>
+                        <div class="comment-content">
+                        <p>{{$k->isi}}</p>
+                        </div>
+                        
+                        @if ($k->user_id == auth()->user()->id)
+                        @include('etalase.komponen.editKomen')
+                        @endif
+                        <div class="comment-actions">
+
+                          @if ($k->user_id == auth()->user()->id)
+                        <a href="javascript:void(0)" data-target="#editKomen{{$k->id}}" data-toggle="modal" role="button">Edit</a>
+                        @endif  
+                        <a href="javascript:void(0)" onclick="balas({{$k->id}})" role="button">Balas</a>
+                        </div>
+                      </div>
+                      <div class="comments">
+                       {{-- kb --}}
+                       @foreach ($k->balasan as $b)
+                           
+                       <div class="comment media">
+                         <div class="pr-20">
+                           <a class="avatar avatar-lg" href="javascript:void(0)">
+                             <img src="{{asset(Storage::url(is_null($b->user->avatar) ? '1.jpg' : 'avatar/'.$b->user->avatar))}}" alt="...">
+                            </a>
+                          </div>
+                          <div class="comment-body media-body">
+                          <a class="comment-author" href="javascript:void(0)">{{$b->user->name}}</a>
+                            <div class="comment-meta">
+                              <span class="date">{{$b->created_at->diffForHumans()}}</span>
+                            </div>
+
+                            <div class="comment-content">
+                            <p>{{$b->isi}}</p>
+                            </div>
+                            
+                            @if ($b->user_id == auth()->user()->id)
+                        @include('etalase.komponen.editBalas')
+                        @endif
+                            <div class="comment-actions">
+                              @if ($b->user_id == auth()->user()->id)
+                              <a href="javascript:void(0)" data-target="#editBalas{{$b->id}}" data-toggle="modal" role="button">Edit</a>
+                                  
+                              @endif
+                            </div>
+                          </div>
+                        </div>
+                        @endforeach
+                     {{-- kb --}}
+                     <div id="komen-{{$k->id}}" style="display: none">
+                     <form class="comment-reply" action="{{route('komentar.balas',$k->id)}}" method="post">
+                      @csrf
+                         <div class="form-group">
+                           <textarea class="form-control" name="balas" rows="5" placeholder="Comment here"></textarea>
+                          </div>
+                                  <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Balas Komentar</button>
+                                  <button onclick="balas({{$k->id}})" type="button" class="btn btn-link grey-600">close</button>
+                                  </div>
+                                </form>
+                              </div>
+                              </div>
+                            </div>
+                          </div>
+                        @endforeach
+                          <form class="comments-add mt-35" action="{{route('komentar.create',$w->id)}}" method="post">
+                            <h3 class="mb-35">Tinggalkan Komentar</h3>
+                            @csrf
+                    <div class="form-group">
+                    <textarea name="isi" required class="form-control" rows="5" placeholder="Comment here"></textarea>
                   </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Comment</button>
+                   </div>
+                  </form>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="email-more mt-0">
-            <p>You are currently signed up to Company’s newsletters as: youremail@gmail.com
-              to <a class="email-unsubscribe" href="javascript:void(0)">unsubscribe</a></p>
-            <div class="email-more-social">
-              <a href="javascript:void(0)"><i class="icon bd-twitter" aria-hidden="true"></i></a>
-              <a href="javascript:void(0)"><i class="icon bd-facebook" aria-hidden="true"></i></a>
-              <a href="javascript:void(0)"><i class="icon bd-linkedin" aria-hidden="true"></i></a>
-              <a href="javascript:void(0)"><i class="icon bd-pinterest" aria-hidden="true"></i></a>
+                    
+                @endif
+        
+        <!-- End Panel Comments Full -->
+        
             </div>
           </div>
         </div>

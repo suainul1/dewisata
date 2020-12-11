@@ -23,7 +23,6 @@
 </script>
 @endsection
 @section('content')
-
 <!-- Page -->
 <div class="page">
     <div class="page-header">

@@ -63,6 +63,7 @@ class XenditController extends Controller
     }
     public function expinvoice($x = '')
     {
+        $this->keyXendit;
         $x = \Xendit\Invoice::expireInvoice($x);
         return $x;
     }

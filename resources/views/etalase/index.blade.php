@@ -9,9 +9,7 @@
     <div class="page-header page-header-bordered page-header-tabs">
       <h1 class="page-title">Tempat Wisata</h1>
       <div class="page-header-actions">
-       <form action="">
-           <input type="text">
-       </form>
+    
       </div>
 
       <ul class="nav nav-tabs nav-tabs-line" role="tablist" id="exampleFilter">
@@ -45,7 +43,10 @@
                     </figcaption>
                 </figure>
                 <div class="card-block">
-                <h4 class="card-title"><a href="{{route('etalase.show',$w->slug)}}">{{$w->nama_wisata}}</a></h4>
+                  @php
+                      $cm = $cm ?? false;
+                  @endphp
+                <h4 class="card-title"><a href="{{$cm == true ? route('komentar.show',$w->slug):route('etalase.show',$w->slug)}}">{{$w->nama_wisata}}</a></h4>
                 </div>
             </div>
         </li>

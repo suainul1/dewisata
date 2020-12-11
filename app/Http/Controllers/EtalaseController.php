@@ -10,12 +10,21 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class EtalaseController extends Controller
 {
     public function __construct()
     {
         $this->xendit = new XenditController;
+    }
+    public function validasi($request)
+    {
+        $validator = Validator::make($request->all(),[
+            'berkunjung' => ['required'],
+            'harga' => ['required'],
+        ]);
+        return $validator;
     }
     public function index()
     {
@@ -41,6 +50,13 @@ class EtalaseController extends Controller
         }elseif($request->berkunjung < Carbon::now()){
              return redirect()->back()->with('error', 'tanggal telah terlewat');
         }
+        $validator = $this->validasi($request);
+        if ($validator->fails()) {
+            \RealRashid\SweetAlert\Facades\Alert::toast('Tanggal berkunjung/harga tiket wajib di isi', 'warning');
+            return redirect()
+            ->back()
+            ->withErrors($validator); 
+		}
         DB::transaction(function() use($request,$w){
             $trans = Transaksi::create([
                 'user_id' => auth()->user()->id,
