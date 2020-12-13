@@ -26,10 +26,11 @@ class BankController extends Controller
     {
         $validator = $this->validasi($request);
         if ($validator->fails()) {
-            \RealRashid\SweetAlert\Facades\Alert::toast('Gagal menyimpan', 'warning');
-            return redirect()
-            ->back()
-            ->withErrors($validator); 
+          foreach($validator->messages()->messages() as $er){
+            toastr()->error($er[0],'Gagal Menyimpan');
+          }
+           return redirect()
+            ->back();
 		}
         Bank::create([
             'user_id' => auth()->user()->id,
@@ -43,8 +44,7 @@ class BankController extends Controller
     {
         $validator = $this->validasi($request);
         if ($validator->fails()) {
-            \RealRashid\SweetAlert\Facades\Alert::toast('Gagal Update', 'warning');
-            return redirect()
+           return redirect()
             ->back()
             ->withErrors($validator); 
 		}
