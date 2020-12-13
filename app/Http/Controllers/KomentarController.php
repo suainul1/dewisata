@@ -41,10 +41,11 @@ class KomentarController extends Controller
     {
         $validator = $this->validasiKomen($request);
         if ($validator->fails()) {
-            \RealRashid\SweetAlert\Facades\Alert::toast('Gagal membuat komentar', 'warning');
-            return redirect()
-            ->back()
-            ->withErrors($validator); 
+            foreach($validator->messages()->messages() as $er){
+                toastr()->error($er[0],'Gagal Menyimpan');
+              }
+               return redirect()
+                ->back();
 		}
         Komentar::create([
             'wisata_id' => $id,
@@ -57,10 +58,11 @@ class KomentarController extends Controller
     {
         $validator = $this->validasiKomen($request);
         if ($validator->fails()) {
-            \RealRashid\SweetAlert\Facades\Alert::toast('Gagal update komentar', 'warning');
-            return redirect()
-            ->back()
-            ->withErrors($validator); 
+            foreach($validator->messages()->messages() as $er){
+                toastr()->error($er[0],'Gagal Menyimpan');
+              }
+               return redirect()
+                ->back();
 		}
         $id->update([
             'isi' => $request->isi
@@ -71,10 +73,11 @@ class KomentarController extends Controller
     {
         $validator = $this->validasiBalas($request);
         if ($validator->fails()) {
-            \RealRashid\SweetAlert\Facades\Alert::toast('Gagal membuat komentar', 'warning');
-            return redirect()
-            ->back()
-            ->withErrors($validator); 
+            foreach($validator->messages()->messages() as $er){
+                toastr()->error($er[0],'Gagal Menyimpan');
+              }
+               return redirect()
+                ->back();
 		}
         $k->balasan()->create([
             'user_id' => auth()->user()->id,
@@ -86,12 +89,12 @@ class KomentarController extends Controller
     {
         $validator = $this->validasiBalas($request);
         if ($validator->fails()) {
-            \RealRashid\SweetAlert\Facades\Alert::toast('Gagal update', 'warning');
-            return redirect()
-            ->back()
-            ->withErrors($validator); 
-        }
-       
+            foreach($validator->messages()->messages() as $er){
+                toastr()->error($er[0],'Gagal Menyimpan');
+              }
+               return redirect()
+                ->back();
+		}
         $id->update([
             'isi' => $request->balas,
         ]);

@@ -28,6 +28,7 @@ class EtalaseController extends Controller
     }
     public function index()
     {
+        
         $wisata = Wisata::where('status','terima')->get();
         return view('etalase.index',compact('wisata'));
     }
@@ -52,10 +53,11 @@ class EtalaseController extends Controller
         }
         $validator = $this->validasi($request);
         if ($validator->fails()) {
-            \RealRashid\SweetAlert\Facades\Alert::toast('Tanggal berkunjung/harga tiket wajib di isi', 'warning');
-            return redirect()
-            ->back()
-            ->withErrors($validator); 
+            foreach($validator->messages()->messages() as $er){
+                toastr()->error($er[0],'Gagal Menyimpan');
+              }
+               return redirect()
+                ->back();
 		}
         DB::transaction(function() use($request,$w){
             $trans = Transaksi::create([

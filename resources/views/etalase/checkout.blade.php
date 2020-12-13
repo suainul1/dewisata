@@ -28,14 +28,14 @@
                     <td>{{$t->nama}}</td>
                     <td>{{$t->harga}}</td>
                     <td><input type="number" value="1" name="orang[]" class="form-control" id="inputText" placeholder="Jumlah Orang"></td>
-                    <td><input type="checkbox" id="inputUnchecked" value="{{$t->id}}" name="harga[]"></td>
+                    <td><input type="checkbox" id="inputUnchecked" {!! $t->nama == 'harga_masuk' ? 'required' : null !!} value="{{$t->id}}" name="harga[]"></td>
                     </tr>
                     @endforeach
                 </tbody>
               </table>
               <div class="form-group form-material" data-plugin="formMaterial">
                 <label class="form-control-label" for="berkunjung">Tanggal Berkunjung</label>
-                <input type="date" class="form-control"
+                <input type="date" class="form-control" required
                     id="berkunjung" name="berkunjung" placeholder="Atur Tanggal Berkunjung"
                     >
                     @if(session()->get('error'))

@@ -16,15 +16,15 @@ class CreateWisatasTable extends Migration
         Schema::create('wisatas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('nama_wisata')->nullable(); 
-            $table->string('alamat_wisata')->nullable(); 
-            $table->string('jam_operasional')->nullable();
+            $table->string('nama_wisata',30)->nullable(); 
+            $table->string('alamat_wisata',50)->nullable(); 
+            $table->string('jam_operasional',15)->nullable();
             $table->enum('jenis_wisata',['budaya/sejarah','bahari','cagar alam','konvensi','agrowisata','berburuh','ziarah'])->nullable();
             $table->text('deskripsi_wisata')->nullable();
-            $table->string('slug')->nullable();
-            $table->string('dokumen_wisata')->nullable();
-            $table->string('scan_ktp');
-            $table->string('nik');
+            $table->string('slug',100)->nullable();
+            $table->string('dokumen_wisata',50)->nullable();
+            $table->string('scan_ktp',50);
+            $table->string('nik',20);
             $table->integer('kapasitas')->nullable();
             $table->text('pesan')->nullable();
             $table->enum('status',['terima','proses','pengajuan','tolak'])->default('proses');

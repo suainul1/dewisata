@@ -16,7 +16,7 @@ class CreateGaleryWisatasTable extends Migration
         Schema::create('galery_wisatas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('wisata_id')->references('id')->on('wisatas')->onDelete('cascade');
-            $table->string('foto');
+            $table->string('foto',50);
             $table->timestamps();
         });
     }

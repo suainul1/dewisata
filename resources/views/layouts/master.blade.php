@@ -5,7 +5,9 @@
     <!--[if lt IE 8]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    @include('sweetalert::alert')
+    @jquery
+    @toastr_js
+    @toastr_render
     <nav class="site-navbar navbar navbar-default navbar-fixed-top navbar-mega" role="navigation">
     
       <div class="navbar-header">
@@ -63,6 +65,7 @@
             <li class="nav-item dropdown">
                   
               @php
+              
               $hitung = App\Models\Transaksi::where('status','terbayar')->orWhere('status','berkunjung');
               if(auth()->user()->role != 'admin'){
                 $hitung = $hitung->where('wisata_id',auth()->user()->wisata->id)->get('harga_total');
@@ -328,7 +331,6 @@
     </nav>    
     
     @include('layouts.sidebar') 
-    @include('sweetalert::alert')
     @yield('content')
 
 @include('layouts.footer')

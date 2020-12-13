@@ -18,6 +18,7 @@ class TransaksiController extends Controller
         } else {
             $transaksi = Transaksi::simplePaginate(10);
         }
+       
 
         return view('transaksi.riwayat', compact('transaksi'));
     }
