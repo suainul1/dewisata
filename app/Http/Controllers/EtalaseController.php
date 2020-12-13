@@ -34,7 +34,9 @@ class EtalaseController extends Controller
     }
     public function show(Wisata $w)
     {
-        return view('etalase.show',compact('w'));
+        $komentar = new KomentarController;
+        $komentar = $komentar->show($w->id);
+        return view('etalase.show',compact(['w','komentar']));
     }
     public function setPrice(Wisata $w)
     {

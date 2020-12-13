@@ -79,10 +79,7 @@
                     </table>
                     </div>
                     @endif
-                    @php
-                        $cm = $cm ?? null;
-                    @endphp
-                    @if (auth()->user()->role != 'admin' && is_null($cm))
+                    @if (auth()->user()->role != 'admin' && auth()->user()->role != 'pengelola_wisata')
                   <div class="card-block p-0 text-center">
                   <a href="{{route('etalase.setPrice',$w->slug)}}"><button class="btn btn-primary">Checkout</button></a>
                     </div>
@@ -90,23 +87,19 @@
                 <div class="card-block px-0 clearfix">
                   
                   <div class="card-actions float-right">
-                    <a href="javascript:void(0)">
-                  <i class="icon md-share"></i>
-                </a>
-                    <a href="javascript:void(0)">
-                  <i class="icon md-favorite"></i>
-                  <span>63</span>
-                </a>
+                  
                     <a href="javascript:void(0)">
                   <i class="icon md-comment"></i>
-                  <span>26</span>
+                    <span>{{$komentar->count()}}</span>
                 </a>
                   </div>
                 </div>
              <hr>
          
                   <!-- Panel Comments Full -->
-                @if (!is_null($cm))
+                  @if (auth()->user()->role != 'admin')
+                      
+                 
                 <div class="comments mx-20">
                   <h3>Forum</h3>
                   @foreach ($komentar as $k)

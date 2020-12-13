@@ -43,10 +43,7 @@
                     </figcaption>
                 </figure>
                 <div class="card-block">
-                  @php
-                      $cm = $cm ?? false;
-                  @endphp
-                <h4 class="card-title"><a href="{{$cm == true ? route('komentar.show',$w->slug):route('etalase.show',$w->slug)}}">{{$w->nama_wisata}}</a></h4>
+                <h4 class="card-title"><a href="{{route('etalase.show',$w->slug)}}">{{$w->nama_wisata}}</a></h4>
                 </div>
             </div>
         </li>
