@@ -24,17 +24,10 @@ class KomentarController extends Controller
         ]);
         return $validator;
     }
-    public function index()
+    public function show($id)
     {
-        $wisata = Wisata::where('status','terima')->get();
-        $cm = true;
-        return view('etalase.index',compact(['wisata','cm']));
-    }
-    public function show(Wisata $w)
-    {
-        $komentar = Komentar::where('wisata_id',$w->id)->with('balasan')->with('user')->get()->sortDesc();
-       $cm = true;
-        return view('etalase.show',compact(['komentar','w','cm']));
+        $komentar = Komentar::where('wisata_id',$id)->with('balasan')->with('user')->get()->sortDesc();
+        return $komentar;
         
     }
     public function create(Request $request,$id)
