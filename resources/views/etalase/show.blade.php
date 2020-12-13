@@ -97,7 +97,7 @@
              <hr>
          
                   <!-- Panel Comments Full -->
-                  @if (auth()->user()->role != 'admin')
+                  
                       
                  
                 <div class="comments mx-20">
@@ -128,8 +128,10 @@
                           @if ($k->user_id == auth()->user()->id)
                         <a href="javascript:void(0)" data-target="#editKomen{{$k->id}}" data-toggle="modal" role="button">Edit</a>
                         @endif  
+                        @if (auth()->user()->role != 'admin')
                         <a href="javascript:void(0)" onclick="balas({{$k->id}})" role="button">Balas</a>
-                        </div>
+                      @endif  
+                      </div>
                       </div>
                       <div class="comments">
                        {{-- kb --}}
@@ -180,6 +182,7 @@
                             </div>
                           </div>
                         @endforeach
+                        @if (auth()->user()->role != 'admin')
                           <form class="comments-add mt-35" action="{{route('komentar.create',$w->id)}}" method="post">
                             <h3 class="mb-35">Tinggalkan Komentar</h3>
                             @csrf
@@ -190,9 +193,10 @@
                     <button type="submit" class="btn btn-primary">Comment</button>
                    </div>
                   </form>
+                  @endif
                 </div>
                     
-                @endif
+
         
         <!-- End Panel Comments Full -->
         
