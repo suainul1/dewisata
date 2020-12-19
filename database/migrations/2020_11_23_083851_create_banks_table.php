@@ -16,9 +16,9 @@ class CreateBanksTable extends Migration
         Schema::create('banks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('nama');
-            $table->string('no_rekening');
-            $table->string('bank');
+            $table->string('nama',30);
+            $table->string('no_rekening',20);
+            $table->string('bank',30);
             $table->timestamps();
         });
     }

@@ -16,8 +16,8 @@ class CreatePencairanDanasTable extends Migration
         Schema::create('pencairan_danas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('jumlah');
-            $table->string('keterangan');
+            $table->integer('jumlah')->length(7);;
+            $table->string('keterangan',50);
             $table->timestamps();
         });
     }

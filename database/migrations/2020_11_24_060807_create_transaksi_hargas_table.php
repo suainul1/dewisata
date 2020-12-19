@@ -16,9 +16,9 @@ class CreateTransaksiHargasTable extends Migration
         Schema::create('transaksi_hargas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('transaksi_id')->references('id')->on('transaksis')->onDelete('cascade');
-           $table->string('nama');
-            $table->integer('harga');
-            $table->integer('jumlah')->default(1);
+           $table->string('nama',30);
+            $table->integer('harga')->length(7);
+            $table->integer('jumlah')->length(7)->default(1);
             $table->timestamps();
         });
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Bank;
 use App\Models\PencairanDana;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -58,6 +59,7 @@ class BankController extends Controller
     }
     public function pencairan(Request $request)
     {
+        try{
         DB::transaction(function () use($request){
             $p = PencairanDana::create([
                 'user_id' => auth()->user()->id,
@@ -66,6 +68,10 @@ class BankController extends Controller
                 ]);
             $this->xendit->payout($p->id,$p->jumlah,$p->user->bank->bank,$p->user->bank->nama,$p->user->bank->no_rekening,$p->keterangan);
             });
+        } catch (Exception $e) {
+            toastr()->error($e->getMessage());
+            return redirect()->back();
+        }
             return redirect()->back();
     }
 }

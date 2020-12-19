@@ -25,7 +25,7 @@ class CreateWisatasTable extends Migration
             $table->string('dokumen_wisata',50)->nullable();
             $table->string('scan_ktp',50);
             $table->string('nik',20);
-            $table->integer('kapasitas')->nullable();
+            $table->integer('kapasitas')->length(3)->nullable();
             $table->text('pesan')->nullable();
             $table->enum('status',['terima','proses','pengajuan','tolak'])->default('proses');
             $table->timestamps();
