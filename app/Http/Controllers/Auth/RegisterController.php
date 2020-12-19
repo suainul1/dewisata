@@ -51,24 +51,24 @@ class RegisterController extends Controller
     {
         if ($data['check'] ?? null == 'on') {
             return Validator::make($data, [
-                'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'name' => ['required', 'string', 'max:30'],
+                'email' => ['required', 'string', 'email', 'max:30', 'unique:users'],
+                'password' => ['required', 'string', 'min:8', 'max:60', 'confirmed'],
                 'alamat' => ['required', 'min:5'],
                 'jenis_kelamin' => ['required'],
-                'no_hp' => ['required', 'min:10'],
+                'no_hp' => ['required', 'min:10','max:13'],
                 'tanggal_lahir' => ['required'],
-                'nik' => ['required', 'min:14'],
+                'nik' => ['required', 'max:16'],
                 'scan_ktp' => ['required', 'max:2048', 'image']
             ]);
         } else {
             return Validator::make($data, [
-                'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'name' => ['required', 'string', 'max:30'],
+                'email' => ['required', 'string', 'email', 'max:30', 'unique:users'],
+                'password' => ['required', 'string', 'min:8', 'max:60','confirmed'],
                 'alamat' => ['required', 'min:5'],
                 'jenis_kelamin' => ['required'],
-                'no_hp' => ['required', 'min:10'],
+                'no_hp' => ['required', 'min:10','max:13'],
                 'tanggal_lahir' => ['required'],
             ]);
         }

@@ -16,8 +16,8 @@ class CreateTiketsTable extends Migration
         Schema::create('tikets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('wisata_id')->references('id')->on('wisatas')->onDelete('cascade');
-            $table->string('nama');
-            $table->integer('harga');
+            $table->string('nama',30);
+            $table->integer('harga')->length(7);;
             $table->timestamps();
         });
     }
